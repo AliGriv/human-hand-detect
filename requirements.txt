@@ -1,0 +1,6 @@
+numpy<2
+opencv-python
+onnxruntime
+loguru
+tflite-runtime
+matplotlib
