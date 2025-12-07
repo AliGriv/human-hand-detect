@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "humanhanddetect"
+version = "0.1.0"
+description = "Real-time human + hand detection utilities"
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.9"
+
+# Dependencies will be populated dynamically from requirements.txt (see below)
+dynamic = ["dependencies"]
+
+# Entry point (CLI)
+[project.scripts]
+humanhanddetect = "humanhanddetect.cli:main"
+
+# Where the actual code lives
+[tool.setuptools.packages.find]
+where = ["src"]
+
+
+# Tell setuptools to read requirements.txt
+[tool.setuptools.dynamic]
+dependencies = { file = "requirements.txt" }
