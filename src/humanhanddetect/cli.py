@@ -1,7 +1,8 @@
 from argparse import ArgumentParser
 from pathlib import Path
 from humanhanddetect.logging_utils import get_logger, setup_logging
-from config_parser import ConfigParser
+from humanhanddetect.config_parser import ConfigParser
+from humanhanddetect.video_capture import VideoCapture
 
 def main():
     parser = ArgumentParser(description="Human and Hand Detection CLI")
@@ -25,6 +26,26 @@ def main():
 
     config = ConfigParser(config_path = args.config)
 
+    cap = VideoCapture(
+        source=config.video_source,
+        fps=config.video_fps,
+        logger=logger,
+    )
+
+    if not cap.open():
+        logger.error("Failed to open video source.")
+        return
+    try:
+        while True:
+            frame = cap.read()
+            if frame is None:
+                break
+            # TODO: Add processing logic here
+    except KeyboardInterrupt:
+        logger.info("Interrupted by user (KeyboardInterrupt).")
+    finally:
+        cap.close()
+        logger.info("Cleaned up. Bye!")
 
 
 
